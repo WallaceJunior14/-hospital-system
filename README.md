@@ -1,1 +1,1 @@
-# -hospital-system
+# hospital-system
