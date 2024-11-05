@@ -69,17 +69,17 @@ PatientNodeName *findMin(PatientNodeName *root)
 
 PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name)
 {
-    // Caso 1: o nó é uma folha
+    // Case 1: the node is a leaf
     if (root == NULL ) return root;
 
-    // Caso 2: o nó tem apenas um folho
+    // Case 2: the node has only one son
     if (strcmp(name, root->name) < 0) {
         root->left = deleteNodeById(root->left, name);
 
     } else if (strcmp(name, root->name) > 0){
         root->right = deleteNodeById(root->right, name);
 
-    } else {
+    } else { // Case 3: the node has two sons
         if (root->left == NULL){
             PatientNodeName *temp = root->right;
             free(root);
@@ -91,7 +91,7 @@ PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name)
             return temp;
         }
 
-        // Encontra o menor valor da subárvore direita
+        // Finds the lowest value of the right subtree
         PatientNodeName *temp = findMin(root->right);
         root->id = temp->id;
         strcpy(root->name, temp->name);
