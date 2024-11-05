@@ -105,8 +105,8 @@ void preOrderById(const PatientNodeId *root)
 {
     if (root != NULL)
     {
-        printf("%d ", root->id);
         preOrderById(root->left);
+        printf("%d ", root->id);
         preOrderById(root->right);
     }
 } 

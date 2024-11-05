@@ -44,18 +44,32 @@ int main()
     while(fgets(line_file, sizeof(line_file), file) != NULL)
     {
         sscanf(line_file, "%d %s %d %s", &line_id, line_name, &line_age, line_medical_condition);
+        
 
         if (!option) {
-            insertNodeById(root_id, line_id, line_name, line_age, line_medical_condition);
-        } else {
-            insertNodeByName(root_name, line_id, line_name, line_age, line_medical_condition);
-        }
+            PatientNodeId *aux_1 = searchNodeById(root_id, line_id);
 
-        printf("%d, %s, %d, %s\n", line_id, line_name, line_age, line_medical_condition);
+            // If there is no such key yet
+            if (aux_1 == NULL) 
+                root_id = insertNodeById(root_id, line_id, line_name, line_age, line_medical_condition);
+
+        } else {
+            PatientNodeName *aux_2 = searchNodeByName(root_name, line_name);
+
+            // If there is no such key yet
+            if (aux_2 == NULL)                 
+                root_name = insertNodeByName(root_name, line_id, line_name, line_age, line_medical_condition);
+        }
     }
 
     // Closing the file
     fclose(file);
+
+    printf("Arvore ID\n");
+    preOrderById(root_id);
+    printf("Arvore NOME\n");
+    preOrderByName(root_name);
+
 
     return 0;
 }
