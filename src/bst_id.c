@@ -101,13 +101,22 @@ PatientNodeId *deleteNodeById(PatientNodeId *root, const unsigned int id)
     return root;
 }
 
-void preOrderById(const PatientNodeId *root)
+void traverseId(const PatientNodeId *root)
 {
     if (root != NULL)
     {
+        traverseId(root->left);
         printf("%d ", root->id);
-        preOrderById(root->left);
-        preOrderById(root->right);
+        traverseId(root->right);
     }
 } 
 
+void deallocateById(PatientNodeId **root)
+{
+    if (*root == NULL)
+        return;
+    deallocateById(&((*root)->left)); 
+    deallocateById(&((*root)->right));  
+    free(*root);                       
+    *root = NULL;                      
+}

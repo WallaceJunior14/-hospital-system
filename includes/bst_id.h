@@ -16,6 +16,8 @@ PatientNodeId *findMinID(PatientNodeId *root);
 
 PatientNodeId *deleteNodeById(PatientNodeId *root, const unsigned int id);
 
-void preOrderById(const PatientNodeId *root); 
+void traverseId(const PatientNodeId *root); 
+
+void deallocateById(PatientNodeId **root);
 
 #endif
