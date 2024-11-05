@@ -17,7 +17,7 @@ PatientNodeName *createNodeByName(const unsigned int id, const char *name, const
     PatientNodeName *node = (PatientNodeName*)malloc(sizeof(PatientNodeName));
 
     if (!node){
-        printf("Failled to create a new patient.\n");
+        printf("Failed to create a new patient.\n");
         return NULL;
     }
 
@@ -90,13 +90,18 @@ PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name)
             free(root);
             return temp;
         }
-
-        // Finds the lowest value of the right subtree
+        
+        // Finds the minimum value in the right subtree
         PatientNodeName *temp = findMinName(root->right);
+
+        // Copy the minimum node's values to the current node
         root->id = temp->id;
         strcpy(root->name, temp->name);
         root->age = temp->age;
         strcpy(root->medical_condition, temp->medical_condition);
+
+        // Delete the duplicate node in the right subtree
+        root->right = deleteNodeByName(root->right, temp->name);
     }
     return root;
 }
@@ -110,6 +115,7 @@ void traverseName(const PatientNodeName *root)
         traverseName(root->right);
     }
 } 
+
 
 void deallocateByName(PatientNodeName **root)
 {
