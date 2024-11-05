@@ -14,8 +14,10 @@ create:
 	mkdir -p $(OBJ)
 	mkdir -p $(LIB)
 
-libed: $(OBJ)/bst_id.o
-	# Exemplo: $(OBJ)/bst_name.o
+libed: \
+	$(OBJ)/bst_id.o \
+	$(OBJ)/bst_name.o \
+
 
 $(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h | create
 	gcc $(FLAGS) -c $< -I $(INCLUDE) -o $@
@@ -26,7 +28,7 @@ $(OUTPUT)/%: $(APPS)/%.c $(OBJ)/*.o | create
 	gcc $(FLAGS) $< $(OBJ)/*.o -I $(INCLUDE) -o $@
 
 run:
-	$(OUTPUT)/main
+	$(OUTPUT)/main.out
 
 export_lib: libed
 	ar -rcs $(LIB)/libed.a $(OBJ)/*

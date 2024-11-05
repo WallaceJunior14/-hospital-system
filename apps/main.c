@@ -5,7 +5,8 @@
 
 int main()
 {
-    PatientNodeId *root = NULL; 
+    PatientNodeId *root_id = NULL; 
+    PatientNodeName *root_name = NULL;
 
     int line_id, line_age, option = -1;
     char line_name[20], line_medical_condition[30], line_file[30];
@@ -26,10 +27,12 @@ int main()
         sscanf(line_file, "%d %s %d %s", line_id, line_name, line_age, line_medical_condition);
 
         if (!option){
-            insertNodeById(root, line_id, line_name, line_age, line_medical_condition);
+            insertNodeById(root_id, line_id, line_name, line_age, line_medical_condition);
         } else {
-            // insert by name
+            insertNodeByName(root_name, line_id, line_name, line_age, line_medical_condition);
         }
+
+        printf("%d, %s, %d, %s\n", line_id, line_name, line_age, line_medical_condition);
     }
 
 
