@@ -1,62 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "bst_name.h"
-
 typedef struct _patient 
 {
     unsigned int id;
     char name[20];
     int age;
     char medical_condition[30];
-    
     struct _patient *left;
     struct _patient *right;
 } PatientNodeName;
 
 PatientNodeName *createNodeByName(const unsigned int id, const char *name, const unsigned int age, const char *medical_condition)
 {
-    PatientNodeName *node = (PatientNodeName*) malloc(sizeof(PatientNodeName));
+    PatientNodeName *node = (PatientNodeName*)malloc(sizeof(PatientNodeName));
 
-    if (node)
-    {
-        node->id = id;
-        strcpy(node->name, name);
-        node->age = age;
-        strcpy(node->medical_condition, medical_condition);
-        node->left = node->right = NULL;
+    if (!node){
+        printf("Failled to create a new patient.\n");
+        return NULL;
     }
+
+    node->id = id;
+    strcpy(node->name, name);
+    node->age = age;
+    strcpy(node->medical_condition, medical_condition);
+    node->left = node->right = NULL;
+    
     return node;
 }
 
 PatientNodeName *insertNodeByName(PatientNodeName *root, const unsigned int id, const char *name, const unsigned int age, const char *medical_condition)
 {
-    if (root == NULL)
-    {
-        root = createNodeById(id, name, age, medical_condition);
-    } else if (id <= root->id)
-    {
-        root->left = insertNodeById(root->left, id, name, age, medical_condition);
-    } else 
-    {
-        root->right = insertNodeById(root->right, id, name, age, medical_condition);
+    if (root == NULL){
+        root = createNodeByName(id, name, age, medical_condition);
+
+    } else if (strcmp(name, root->name) <= 0){
+        root->left = insertNodeByName(root->left, id, name, age, medical_condition);
+
+    } else {
+        root->right = insertNodeByName(root->right, id, name, age, medical_condition);
     }
     
     return root;
 }
 
-PatientNodeName *searchNodeByName(PatientNodeName *root, const unsigned int id)
+PatientNodeName *searchNodeByName(PatientNodeName *root, const char *name)
 {
-    if (root == NULL || root->id == id)
-    {
+    if (root == NULL || strcmp(root->name, name) == 0){
         return root;
-    } else if (id < root->id)
-    {
-        return searchNodeById(root->left, id);
-    } else 
-    {
-        return searchNodeById(root->right, id);
+    
+    } else if (strcmp(name, root->name) < 0){
+        return searchNodeByName(root->left, name);
+
+    } else {
+        return searchNodeById(root->right, name);
     }
 }
 
@@ -69,31 +67,31 @@ PatientNodeName *findMin(PatientNodeName *root)
     return root;
 }
 
-PatientNodeName *deleteNodeById(PatientNodeName *root, const unsigned int id)
+PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name)
 {
     // Caso 1: o nó é uma folha
     if (root == NULL ) return root;
 
     // Caso 2: o nó tem apenas um folho
-    if (id < root->id) {
-        root->left = deleteNodeById(root->left, id);
-    } else if (id > root->id)
-    {
-        root->right = deleteNodeById(root->right, id);
-    } 
-    // Caso 3: o nó tem 2 filhos
-    else {
-        if (root->left == NULL) {
+    if (strcmp(name, root->name) < 0) {
+        root->left = deleteNodeById(root->left, name);
+
+    } else if (strcmp(name, root->name) > 0){
+        root->right = deleteNodeById(root->right, name);
+
+    } else {
+        if (root->left == NULL){
             PatientNodeName *temp = root->right;
             free(root);
             return temp;
+
         } else if (root->right == NULL) {
             PatientNodeName *temp = root->left;
             free(root);
             return temp;
         }
 
-        // Encontra o menos valor da subárvore direita
+        // Encontra o menor valor da subárvore direita
         PatientNodeName *temp = findMin(root->right);
         root->id = temp->id;
         strcpy(root->name, temp->name);
@@ -103,11 +101,11 @@ PatientNodeName *deleteNodeById(PatientNodeName *root, const unsigned int id)
     return root;
 }
 
-void preOrderById(const PatientNodeName *root)
+void preOrderByName(const PatientNodeName *root)
 {
     if (root != NULL)
     {
-        printf("%d ", root->id);
+        printf("%d ", root->name);
         preOrderById(root->left);
         preOrderById(root->right);
     }
