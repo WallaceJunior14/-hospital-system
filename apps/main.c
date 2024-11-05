@@ -1,38 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bst_id.h"
+#include "bst_name.h"
 
-int main() {
+int main()
+{
     PatientNodeId *root = NULL; 
 
-    root = insertNodeById(root, 50, "wallace", 21, "renite");
-    root = insertNodeById(root, 21, "wallace", 21, "renite");
-    root = insertNodeById(root, 55, "wallace", 21, "renite");
-    root = insertNodeById(root, 18, "wallace", 21, "renite");
-    root = insertNodeById(root, 24, "wallace", 21, "renite");
-    root = insertNodeById(root, 65, "wallace", 21, "renite");
+    int line_id, line_age, option = -1;
+    char line_name[20], line_medical_condition[30], line_file[30];
 
-    printf("Exibição em Pré-Ordem: ");
-    preOrderById(root);
-    printf("\n");
+    // Reading the user's necessity
+    while(option != 0 || option != 1)
+    {
+        printf("Do you want to order the patients by ID or by Name? Type 0 for ID and 1 for Name: ");
+        scanf("%d", &option);
+    }
 
-    puts("Busca na arvore:");
-    PatientNodeId *elem = searchNodeById(root, 24);
-    printf("Endereco : %p\n", elem);
+    // Opening the input file
+    FILE *file = fopen("./input/first_input.txt", "r");
 
-    root = deleteNodeById(root, 18);
-    printf("Árvore após a remoção de %d:\n", 18);
+    // Reading each line separate
+    while(fgets(line_file, sizeof(line_file), file) != NULL)
+    {
+        sscanf(line_file, "%d %s %d %s", line_id, line_name, line_age, line_medical_condition);
 
-    puts("Exibição em In-Ordem após remoção: ");
-    preOrderById(root);
+        if (!option){
+            insertNodeById(root, line_id, line_name, line_age, line_medical_condition);
+        } else {
+            // insert by name
+        }
+    }
 
-    puts("");
-    root = deleteNodeById(root, 55);
-    printf("Árvore após a remoção de %d:\n", 55);
 
-    puts("Exibição em In-Ordem após remoção: ");
-    preOrderById(root);
-    printf("\n");
 
     return 0;
 }
