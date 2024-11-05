@@ -7,30 +7,38 @@ SRC = ./src
 
 FLAGS = -O3 -Wall
 
+# Alvo padrão
 all: libed app
 
+# Criação das pastas necessárias
 create: 
 	mkdir -p $(OUTPUT)
 	mkdir -p $(OBJ)
 	mkdir -p $(LIB)
 
-libed: $(OBJ)/bst_id.o
-	# Exemplo: $(OBJ)/bst_name.o
+# Compilar os arquivos objeto da biblioteca
+libed: $(LIB)/libed.a
+
+$(LIB)/libed.a: $(OBJ)/bst_id.o $(OBJ)/bst_name.o
+	ar -rcs $@ $^
 
 $(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h | create
 	gcc $(FLAGS) -c $< -I $(INCLUDE) -o $@
 
+# Compilar o aplicativo
 app: $(OUTPUT)/main
 
-$(OUTPUT)/%: $(APPS)/%.c $(OBJ)/*.o | create
-	gcc $(FLAGS) $< $(OBJ)/*.o -I $(INCLUDE) -o $@
+$(OUTPUT)/%: $(APPS)/%.c $(LIB)/libed.a | create
+	gcc $(FLAGS) $< $(LIB)/libed.a -I $(INCLUDE) -o $@
 
+# Rodar o aplicativo
 run:
 	$(OUTPUT)/main
 
+# Exportar a biblioteca
 export_lib: libed
-	ar -rcs $(LIB)/libed.a $(OBJ)/*
 
+# Limpar os arquivos compilados
 clean:
 	rm -f $(OUTPUT)/* $(LIB)/* $(OBJ)/*
 

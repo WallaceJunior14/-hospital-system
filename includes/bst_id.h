@@ -12,7 +12,7 @@ PatientNodeId *insertNodeById(PatientNodeId *root, const unsigned int id, const 
 
 PatientNodeId *searchNodeById(PatientNodeId *root, const unsigned int id);
 
-PatientNodeId *findMin(PatientNodeId *root);
+PatientNodeId *findMinID(PatientNodeId *root);
 
 PatientNodeId *deleteNodeById(PatientNodeId *root, const unsigned int id);
 

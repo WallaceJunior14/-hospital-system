@@ -1,38 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bst_id.h"
+#include "bst_name.h"
 
-int main() {
-    PatientNodeId *root = NULL; 
+int main()
+{
+    PatientNodeId *root_id = NULL; 
+    PatientNodeName *root_name = NULL;
 
-    root = insertNodeById(root, 50, "wallace", 21, "renite");
-    root = insertNodeById(root, 21, "wallace", 21, "renite");
-    root = insertNodeById(root, 55, "wallace", 21, "renite");
-    root = insertNodeById(root, 18, "wallace", 21, "renite");
-    root = insertNodeById(root, 24, "wallace", 21, "renite");
-    root = insertNodeById(root, 65, "wallace", 21, "renite");
+    int line_id, line_age, option;
+    char line_name[20], line_medical_condition[30], line_file[100];
 
-    printf("Exibição em Pré-Ordem: ");
-    preOrderById(root);
-    printf("\n");
+    // Reading the user's necessity
+    while(1)
+    {
+        printf("Do you want to order the patients by ID or by Name? Type 0 for ID and 1 for Name: ");
 
-    puts("Busca na arvore:");
-    PatientNodeId *elem = searchNodeById(root, 24);
-    printf("Endereco : %p\n", elem);
+        if (scanf("%d", &option) != 1)
+        {
+            // Caso de erro na leitura
+            printf("Invalid input. Please enter 0 or 1.\n");
+            // Limpar o buffer do stdin
+            int ch;
+            while ((ch = getchar()) != '\n' && ch != EOF);
+            continue;
+        }
 
-    root = deleteNodeById(root, 18);
-    printf("Árvore após a remoção de %d:\n", 18);
+        if (option == 0 || option == 1) break;
+        else
+            printf("Invalid option. Please enter 0 or 1.\n");
+    }
 
-    puts("Exibição em In-Ordem após remoção: ");
-    preOrderById(root);
 
-    puts("");
-    root = deleteNodeById(root, 55);
-    printf("Árvore após a remoção de %d:\n", 55);
+    // Opening the input file
+    FILE *file = fopen("./input/first_input.txt", "r");
+    
+    if (file == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
 
-    puts("Exibição em In-Ordem após remoção: ");
-    preOrderById(root);
-    printf("\n");
+    // Reading each line separate
+    while(fgets(line_file, sizeof(line_file), file) != NULL)
+    {
+        sscanf(line_file, "%d %s %d %s", &line_id, line_name, &line_age, line_medical_condition);
+
+        if (!option) {
+            insertNodeById(root_id, line_id, line_name, line_age, line_medical_condition);
+        } else {
+            insertNodeByName(root_name, line_id, line_name, line_age, line_medical_condition);
+        }
+
+        printf("%d, %s, %d, %s\n", line_id, line_name, line_age, line_medical_condition);
+    }
+
+    // Closing the file
+    fclose(file);
 
     return 0;
 }
