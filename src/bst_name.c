@@ -101,13 +101,23 @@ PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name)
     return root;
 }
 
-void preOrderByName(const PatientNodeName *root)
+void traverseName(const PatientNodeName *root)
 {
     if (root != NULL)
     {
-        preOrderByName(root->left);
+        traverseName(root->left);
         printf("%s ", root->name);
-        preOrderByName(root->right);
+        traverseName(root->right);
     }
 } 
+
+void deallocateByName(PatientNodeName **root)
+{
+    if (*root == NULL)
+        return;
+    deallocateByName(&((*root)->left)); 
+    deallocateByName(&((*root)->right));  
+    free(*root);                       
+    *root = NULL;                      
+}
 

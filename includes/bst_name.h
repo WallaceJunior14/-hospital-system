@@ -16,6 +16,8 @@ PatientNodeName *findMinName(PatientNodeName *root);
 
 PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name);
 
-void preOrderByName(const PatientNodeName *root); 
+void traverseName(const PatientNodeName *root); 
+
+void deallocateByName(PatientNodeName **root);
 
 #endif

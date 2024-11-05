@@ -65,11 +65,5 @@ int main()
     // Closing the file
     fclose(file);
 
-    printf("Arvore ID\n");
-    preOrderById(root_id);
-    printf("Arvore NOME\n");
-    preOrderByName(root_name);
-
-
     return 0;
 }
