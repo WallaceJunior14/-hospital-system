@@ -54,11 +54,11 @@ PatientNodeName *searchNodeByName(PatientNodeName *root, const char *name)
         return searchNodeByName(root->left, name);
 
     } else {
-        return searchNodeById(root->right, name);
+        return searchNodeByName(root->right, name);
     }
 }
 
-PatientNodeName *findMin(PatientNodeName *root)
+PatientNodeName *findMinName(PatientNodeName *root)
 {
     while (root->left != NULL)
     {
@@ -74,10 +74,10 @@ PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name)
 
     // Case 2: the node has only one son
     if (strcmp(name, root->name) < 0) {
-        root->left = deleteNodeById(root->left, name);
+        root->left = deleteNodeByName(root->left, name);
 
     } else if (strcmp(name, root->name) > 0){
-        root->right = deleteNodeById(root->right, name);
+        root->right = deleteNodeByName(root->right, name);
 
     } else { // Case 3: the node has two sons
         if (root->left == NULL){
@@ -92,7 +92,7 @@ PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name)
         }
 
         // Finds the lowest value of the right subtree
-        PatientNodeName *temp = findMin(root->right);
+        PatientNodeName *temp = findMinName(root->right);
         root->id = temp->id;
         strcpy(root->name, temp->name);
         root->age = temp->age;
@@ -105,9 +105,9 @@ void preOrderByName(const PatientNodeName *root)
 {
     if (root != NULL)
     {
-        printf("%d ", root->name);
-        preOrderById(root->left);
-        preOrderById(root->right);
+        printf("%s ", root->name);
+        preOrderByName(root->left);
+        preOrderByName(root->right);
     }
 } 
 

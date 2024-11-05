@@ -12,7 +12,7 @@ PatientNodeName *insertNodeByName(PatientNodeName *root, const unsigned int id, 
 
 PatientNodeName *searchNodeByName(PatientNodeName *root, const char *name);
 
-PatientNodeName *findMin(PatientNodeName *root);
+PatientNodeName *findMinName(PatientNodeName *root);
 
 PatientNodeName *deleteNodeByName(PatientNodeName *root, const char *name);
 

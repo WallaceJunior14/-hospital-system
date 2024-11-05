@@ -58,7 +58,7 @@ PatientNodeId *searchNodeById(PatientNodeId *root, const unsigned int id)
     }
 }
 
-PatientNodeId *findMin(PatientNodeId *root)
+PatientNodeId *findMinID(PatientNodeId *root)
 {
     while (root->left != NULL)
     {
@@ -92,7 +92,7 @@ PatientNodeId *deleteNodeById(PatientNodeId *root, const unsigned int id)
         }
 
         // Finds the lowest value of the right subtree
-        PatientNodeId *temp = findMin(root->right);
+        PatientNodeId *temp = findMinID(root->right);
         root->id = temp->id;
         strcpy(root->name, temp->name);
         root->age = temp->age;
