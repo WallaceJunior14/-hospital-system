@@ -22,7 +22,6 @@ int main() {
     else 
         perror("-> Error initializing trees.\n");
     
-
     // Menu
     while (1) {
         puts("---- HOSPITAL-SYSTEM ----\n");
@@ -45,12 +44,12 @@ int main() {
             if (searchNodeById(root_id, line_id) == NULL && searchNodeByName(root_name, line_name) == NULL){
                 root_id = insertNodeById(root_id, line_id, line_name, line_age, line_medical_condition);
                 root_name = insertNodeByName(root_name, line_id, line_name, line_age, line_medical_condition);
-                puts("  Patient registered successfully!\n");
-
+                
+                puts("  -> Patient registered successfully!\n");
             } else {
-                puts("  Patient already exists.\n");
+                puts("  -> Patient already exists.\n");
             }
-            
+
             break;
 
         case 2:
@@ -58,35 +57,35 @@ int main() {
             scanf("%d", &line_id);
 
             if (searchNodeById(root_id, line_id) == NULL) {
-                puts("  Patient not found.\n");
+                puts("  -> Patient not found.\n");
 
             } else {
                 root_id = deleteNodeById(root_id, line_id);
-                puts("  Patient deleted successfully!\n");
+                puts("  -> Patient deleted successfully!\n");
             }
             break;
 
         case 3:
-            puts("  Enter name: ");
+            puts("  -> Enter name: ");
             scanf("%s", line_name);
 
             if (searchNodeByName(root_name, line_name) == NULL) {
-                puts("  Patient not found.\n");
+                puts("  -> Patient not found.\n");
 
             } else {
                 root_name = deleteNodeByName(root_name, line_name);
-                puts("  Patient deleted successfully!\n");
+                puts("  -> Patient deleted successfully!\n");
             }
             break;
 
         case 4:
-            puts("  Enter id: ");
+            puts("  -> Enter id: ");
             scanf("%d", &line_id);
 
             if (searchNodeById(root_id, line_id) == NULL) {
-                puts("  Patient not found.\n");
+                puts("  -> Patient not found.\n");
             } else {
-                printf("    Patient with id '%d' found.\n", line_id);
+                printf("   -> Patient with id '%d' found.\n", line_id);
             }
             break;
 
@@ -95,33 +94,36 @@ int main() {
             scanf("%s", line_name);
 
             if (searchNodeByName(root_name, line_name) == NULL) {
-                puts("  Patient not found.\n");
+                puts("  -> Patient not found.\n");
             } else {
-                printf("    Patient with name '%s' found.\n", line_name);
+                printf("    -> Patient with name '%s' found.\n", line_name);
             }
             break;
         
         case 6:
-            puts("Traversing BST by Id: ");
+            puts("-> Traversing BST by Id: ");
             traverseId(root_id);
             puts("\n");
             break;
 
         case 7:
-            puts("Traversing BST by Name: ");
+            puts("-> Traversing BST by Name: ");
             traverseName(root_name);
             puts("\n");
             break;
 
         case 8:
-            puts("Deallocating BST and generating report of patients...\n");
-            // TODO: Add code to generate report here
+            puts("| ----- % Generating report of patients % ----- |\n");
+            generate_output_file_from_id_tree(root_id);
+            generate_output_file_from_name_tree(root_name);
+
+            puts("| ----- % Relocating the trees % ----- |\n");    
             deallocateById(&root_id);
             deallocateByName(&root_name);
             return 0;
 
         default:
-            printf("Please choose a valid option.\n");
+            perror("* Please choose a valid option.\n");
             break;
         }
     }

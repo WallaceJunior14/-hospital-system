@@ -56,4 +56,11 @@ void traverseId(const PatientNodeId *root);
 */
 void deallocateById(PatientNodeId **root);
 
+/**
+ * @brief Generates a tree log file;
+ * @param *root;
+ * @return void;
+*/
+void generate_output_file_from_id_tree(PatientNodeId *root);
+
 #endif

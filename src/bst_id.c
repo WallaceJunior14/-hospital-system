@@ -120,8 +120,32 @@ void deallocateById(PatientNodeId **root)
 {
     if (*root == NULL)
         return;
+
     deallocateById(&((*root)->left)); 
     deallocateById(&((*root)->right));  
     free(*root);                       
     *root = NULL;                      
+}
+
+void generate_output_file_from_id_tree(PatientNodeId *root)
+{
+    if (root != NULL)
+    {
+        // Primeiro, percorre o lado esquerdo da árvore
+        generate_output_file_from_id_tree(root->left);
+
+        // Em seguida, processa o nó raiz (atual)
+        FILE *arq_log = fopen("./output/log_root_id.txt", "a");
+        if (arq_log == NULL){
+            perror("Error opening the file.");
+            return;
+        }
+        
+        fprintf(arq_log, "%d %s %d %s\n", root->id, root->name, root->age, root->medical_condition);
+
+        fclose(arq_log);
+
+        // Finalmente, percorre o lado direito da árvore
+        generate_output_file_from_id_tree(root->right);
+    }
 }

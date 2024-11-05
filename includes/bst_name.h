@@ -56,4 +56,11 @@ void traverseName(const PatientNodeName *root);
 */
 void deallocateByName(PatientNodeName **root);
 
+/**
+ * @brief Generates a tree log file;
+ * @param *root;
+ * @return void;
+*/
+void generate_output_file_from_name_tree(PatientNodeName *root);
+
 #endif
