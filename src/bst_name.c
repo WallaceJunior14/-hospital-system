@@ -40,8 +40,7 @@ PatientNodeName *insertNodeByName(PatientNodeName *root, const unsigned int id, 
 
     } else {
         root->right = insertNodeByName(root->right, id, name, age, medical_condition);
-    }
-    
+    }    
     return root;
 }
 
@@ -116,7 +115,6 @@ void traverseName(const PatientNodeName *root)
     }
 } 
 
-
 void deallocateByName(PatientNodeName **root)
 {
     if (*root == NULL)
@@ -131,10 +129,10 @@ void generate_output_file_from_name_tree(PatientNodeName *root)
 {
     if (root != NULL)
     {
-        // Primeiro, percorre o lado esquerdo da árvore
+        // First, traverse the left side of the tree
         generate_output_file_from_name_tree(root->left);
 
-        // Em seguida, processa o nó raiz (atual)
+        // Then, process the current root
         FILE *arq_log = fopen("./output/log_root_name.txt", "a");
         if (arq_log == NULL){
             perror("Error opening the file.");
@@ -145,7 +143,7 @@ void generate_output_file_from_name_tree(PatientNodeName *root)
 
         fclose(arq_log);
 
-        // Finalmente, percorre o lado direito da árvore
+        // Finally, traverse the right side of the tree
         generate_output_file_from_name_tree(root->right);
     }
 }

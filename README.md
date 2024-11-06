@@ -17,7 +17,7 @@ This project was implemented in **C** and utilizes the following data structure:
 - C Compiler (such as GCC)
 - Linux or Windows system with a compatible C environment
 
-### Compiling and Running the Game
+### Compiling and Running 
 - make create
 - make all
 - make run 
