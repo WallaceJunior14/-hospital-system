@@ -5,7 +5,8 @@
 
 void initialize_trees(PatientNodeId **root_id,  PatientNodeName **root_name);
 
-int main() {
+int main()
+{
     PatientNodeId *root_id = NULL; 
     PatientNodeName *root_name = NULL;
 
@@ -33,6 +34,7 @@ int main() {
         puts("6. List all patients by Id\n");
         puts("7. List all patients by Name\n");
         puts("8. Exit and generate report\n");
+        puts("Enter an option: ");
 
         scanf("%d", &choice);
 
@@ -49,7 +51,6 @@ int main() {
             } else {
                 puts("  -> Patient already exists.\n");
             }
-
             break;
 
         case 2:
@@ -137,13 +138,13 @@ void initialize_trees(PatientNodeId **root_id,  PatientNodeName **root_name)
     // Opening the register of existing patients
     FILE *file = fopen("./input/first_input.txt", "r");
     
-    if (file == NULL) {
+    if (file == NULL){
         perror("Error opening file");
         return;
     }
 
     // Reading each patient and adding it to the BST
-    while (fgets(line_file, sizeof(line_file), file) != NULL) {
+    while (fgets(line_file, sizeof(line_file), file) != NULL){
         sscanf(line_file, "%d %s %d %s", &line_id, line_name, &line_age, line_medical_condition);
 
         if (searchNodeById(*root_id, line_id) == NULL) {
@@ -154,7 +155,6 @@ void initialize_trees(PatientNodeId **root_id,  PatientNodeName **root_name)
             *root_name = insertNodeByName(*root_name, line_id, line_name, line_age, line_medical_condition);
         }
     }
-
     // Closing the file
     fclose(file);
 }
