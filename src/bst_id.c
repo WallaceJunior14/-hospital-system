@@ -40,8 +40,7 @@ PatientNodeId *insertNodeById(PatientNodeId *root, const unsigned int id, const 
 
     } else {
         root->right = insertNodeById(root->right, id, name, age, medical_condition);
-    }
-    
+    }    
     return root;
 }
 
@@ -131,10 +130,10 @@ void generate_output_file_from_id_tree(PatientNodeId *root)
 {
     if (root != NULL)
     {
-        // Primeiro, percorre o lado esquerdo da árvore
+        // First, traverse the left side of the tree
         generate_output_file_from_id_tree(root->left);
 
-        // Em seguida, processa o nó raiz (atual)
+        // Then, process the current root
         FILE *arq_log = fopen("./output/log_root_id.txt", "a");
         if (arq_log == NULL){
             perror("Error opening the file.");
@@ -145,7 +144,7 @@ void generate_output_file_from_id_tree(PatientNodeId *root)
 
         fclose(arq_log);
 
-        // Finalmente, percorre o lado direito da árvore
+        // Finally, traverse the right side of the tree
         generate_output_file_from_id_tree(root->right);
     }
 }
